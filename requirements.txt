@@ -4,7 +4,6 @@ Pillow==9.4.0
 gunicorn
 xhtml2pdf
 ffmpeg 
-libcairo2-dev
 pygobjet
 aiohttp==3.8.1
 yarl==1.4.2
