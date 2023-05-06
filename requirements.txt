@@ -4,7 +4,7 @@ Pillow==9.4.0
 gunicorn
 xhtml2pdf
 ffmpeg 
-pygobjet
+pygobject
 aiohttp==3.8.1
 yarl==1.4.2
 frozenlist==1.3.0
