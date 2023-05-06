@@ -122,8 +122,8 @@ USE_TZ = True
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR]
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [BASE_DIR ]
 AUTH_USER_MODEL = 'comptes.User'
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
