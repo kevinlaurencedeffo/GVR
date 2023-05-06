@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body style="font-size: 14px;">
+    <table>
+        <tr>
+            <td>
+                NET EXPRESS CORP SARL <br>
+                Yaoundé- Ngoa-Ekéllé<br>
+                +237655122009/ +237696483771<br>
+                Netxpress91@gmail.com
+            </td>
+            <td>
+                <pre style="width=120px;height:100px;">                        <img src="media/assets/nec.jpg" ></pre>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+
+            </td>
+            <td style="font-size: 25px; margin-top: 30px;">
+                Liste des Employes
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>Date: {{ date }}</td>
+        </tr>
+    </table>
+
+<table style="margin-top: 10px; border: solid 0.02px rgb(187, 183, 183); height: 30px;">
+        
+    <tr>
+        <th>
+            Matricule
+        </th>
+        <th>
+            Nom
+        </th>
+        <th>
+            Prenom
+        </th>
+        <th>
+            Sexe
+        </th>
+        <th>
+            Addresse
+        </th>
+        <th>
+            Fonction
+        </th>
+        <th>
+            Telephone
+        </th>
+    </tr>
+    {% for ob in obj %}
+    <tr>
+        <td style="margin-left:4px;">
+            {{ob.matricule}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.name}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.surname}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.sexe}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.quartier}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.poste}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.tel}}
+        </td>
+    </tr>
+    
+    {% endfor %}
+</table>
+
+</body>
+</html>

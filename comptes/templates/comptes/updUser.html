@@ -1,0 +1,148 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+<style>
+    .card-upd {
+        max-width: 400px;
+        min-height: 300px;
+        border-radius: 24px;
+        margin-top: 60px;
+        background: #fff;
+        display: flex;
+    }
+
+    .inp-dia {
+        margin: 10px;
+        width: 35Vh;
+        height: 5vh;
+        border: solid 1px grey;
+        color: rgb(70, 69, 69);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .add-dia {
+        width: 58%;
+        margin: 15px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+
+    .inp-data {
+        align-items: center;
+        justify-content: center;
+    }
+
+    form {
+
+
+        margin-left: 40px;
+    }
+</style>
+<!-- messages -->
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+<center>
+    <div class="card-upd">
+        <div class="inp-data">
+            <form method="POST">
+                {% csrf_token %}
+                <h2>Modifier L'Utilisateur {{ obj.username }}</h2>
+                {% csrf_token %}
+                <input class="inp-dia" type="text" placeholder="Username" name="username" value="{{ obj.username }}">
+                <input class="inp-dia" type="text" placeholder="email" name="email" value="{{ obj.email }}"><br />
+                <pre>ADMIN <input class="inp-dia" type="radio" id="admin" name="statut"></pre><br/>
+                <pre>COMPTABLE <input class="inp-dia" type="radio" id="comptable" name="statut"></pre><br/>
+                <pre>GRH <input class="inp-dia" type="radio" id="grh" name="statut"></pre><br />
+                <pre>GSTOCK <input class="inp-dia" type="radio" id="gstock" name="statut"></pre><br/>
+                <pre>ANONIMOUS <input class="inp-dia" type="radio" id="anonimous" name="statut"></pre><br/>
+                <input type="text" style="display: none;" name="is_admin" id="adm">
+                <input type="text" style="display: none;" name="is_comptable" id="cmp">
+                <input type="text" style="display: none;" name="is_grh" id="gh">
+                <input type="text" style="display: none;" name="is_gstock" id="gst">
+                <input type="text" style="display: none;" name="is_anonimous" id="ano">
+                <button class="add-dia"><sl-icon slot="prefix" name="pencil"></sl-icon> Modifier</button>
+            </form>
+        </div>
+    </div>
+</center>
+
+<script>
+    admin = document.getElementById('admin');
+    adm=document.getElementById('adm');
+    comptable = document.getElementById('comptable');
+    cmp = document.getElementById('cmp');
+    grh = document.getElementById('grh');
+    gh = document.getElementById('gh');
+    gstock = document.getElementById('gstock');
+    gst = document.getElementById('gst');
+    anonimous = document.getElementById('anonimous');
+    ano = document.getElementById('ano');
+    adm.value='False';
+    cmp.value='False';
+    gh.value='False';
+    gst.value='False';
+    ano.value='False';
+
+    admin.addEventListener('click',()=>{
+    if  (admin.checked){  
+        adm.value='True';
+        alert(adm)   
+    }
+    else{
+        adm.value='False';
+        alert(adm)
+    }
+    });
+    comptable.addEventListener('click',()=>{
+    if  (cmp.checked){  
+        cmp.value='True';
+        alert(cmp)   
+    }
+    else{
+        cmp.value='False';
+        alert(cmp)
+    }
+    });
+    grh.addEventListener('click',()=>{
+    if  (grh.checked){  
+        gh.value='True';
+        alert(gh)   
+    }
+    else{
+        gh.value='False';
+        alert(gh)
+    }
+    });
+    gstock.addEventListener('click',()=>{
+    if  (gstock.checked){  
+        gst.value='True';
+        alert(gst)   
+    }
+    else{
+        gst.value='False';
+        alert(gst.value)
+    }
+    });
+    anonimous.addEventListener('click',()=>{
+    if  (anonimous.checked){  
+        ano.value='True';
+        alert(ano)   
+    }
+    else{
+        ano.value='False';
+        alert(ano.value)
+    }
+    });
+    
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+    <style>
+        
+        .card-upd{
+            max-width: 400px;
+            min-height: 300px;
+            border-radius: 24px;
+            margin-top:100px;
+            background: #fff;
+            display: flex;
+        }
+        .inp-dia {
+        margin: 16px;
+        width: 35Vh;
+        height: 5vh;
+        border: solid 1px grey;
+        color: rgb(70, 69, 69);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .add-dia {
+        width: 58%;
+        margin: 15px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+    .inp-data{
+        align-items: center;
+        justify-content: center;
+    }
+    form{
+        align-items: center;
+        justify-content: center;
+        margin-left: 70px;
+    }
+        
+    </style>
+<!-- messages -->
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+<center>
+    <div class="card-upd">
+       <div class="inp-data"><center>
+        <form method="POST">
+            {% csrf_token %}
+            <h2>Modifier L'Operation {{ obj.reference }}</h2>
+            <input class="inp-dia" type="text" placeholder="Reference" name="reference" value="{{ obj.reference }}"><br/>
+            <input class="inp-dia" type="text" placeholder="Libele" name="libele" value="{{ obj.libele }}"><br/>
+            <input class="inp-dia" type="number" placeholder="Montant" name="montant" value="{{ obj.montant }}"><br/>
+            <input class="inp-dia" type="date" placeholder="Date" name="date" value="{{ obj.date }}"><br/>
+            <button class="add-dia"><sl-icon slot="prefix" name="pencil"></sl-icon> Modifier</button>
+       </form>
+        </center>
+        </div>
+
+    </div> 
+</center>
+{% endblock %}

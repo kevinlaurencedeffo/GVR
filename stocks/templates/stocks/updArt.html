@@ -1,0 +1,67 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+
+
+    <style>
+       
+        .card-upd{
+            max-width: 700px;
+            min-height: 300px;
+            border-radius: 24px;
+            margin-top:120px;
+            background: #fff;
+            display: flex;
+        }
+        .inp-dia {
+        margin: 16px;
+        width: 36VH;
+        height: 5vh;
+        border: solid 1px grey;
+        color: rgb(70, 69, 69);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .add-dia {
+        width: 18%;
+        margin: 15px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+    .inp-data{
+        align-items: center;
+        justify-content: center;
+    }
+        
+    </style>
+
+<center>
+    <div class="card-upd">
+       <center><div class="inp-data">
+            <h2>Modifier L'Article {{ obj.article_name }}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <select name="typea" class="inp-dia">
+                    <option name="typea">Entree</option>
+                    <option name="typea">Sortie</option>
+                </select>
+            <input class="inp-dia" type="number" placeholder="Stock Initial" name="si" value="{{ obj.si }}"><br/>
+            <input class="inp-dia" type="text" placeholder="Nom" name="article_name" value="{{ obj.article_name }}"><br/>
+            <input class="inp-dia" type="text" placeholder="libele" name="libele" value="{{ obj.libele }}">
+            <input class="inp-dia" type="number" placeholder="Prix" name="prix" value="{{ obj.prix }}"><br/>
+            <input class="inp-dia" type="number" placeholder="Quantite" name="quantite" value="{{ obj.quantite }}"><br/>
+            <input class="inp-dia" type="date" placeholder="Date de Naissance" name="date" value="{{ obj.date }}"><br/>
+            <button class="add-dia"><sl-icon slot="prefix" name="plus-lg"></sl-icon> Modifier</button>
+        </form>
+
+
+        </div></center>
+
+    </div> 
+</center>
+{% endblock %}

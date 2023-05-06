@@ -1,0 +1,256 @@
+{% extends 'comptes/dashboard.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    .tab-flux{
+        margin-top: 30px;
+    }
+    body.dark table{
+        border:none;
+        color:white;
+    }
+    table{
+        border-collapse: collapse;
+        width: 96%;
+        height:70px;
+        margin-left:16px;
+        margin-top:6px;
+        border: 1px solid #bdc3c7;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+
+    }
+    tr{
+        transition: all .2s ease-in;
+        cursor: pointer;
+    }
+    td,th{
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th{
+        height:35px;
+    }
+    .header{
+        background-color: var(--primary-color);
+        color: white;
+    }
+    tr:hover{
+        transform: scale(1.008);
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+    }
+    @media only screen and (max-width:768px){
+        table{
+            width: 90%;
+        }
+    }
+    .sidebar.close ~ .home .b-cart{
+        width: 1160px;
+        margin-left:65px;
+    }
+    .b-cart{
+        width: 1040px;
+        height:550px;
+        border-radius:20px;
+        display:flex;
+        flex-direction:column;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        margin-left:60px;
+    }
+    .b-cart .searchbar {
+        width: 96%;
+        margin-top: 6px;
+        display: flex;
+        height: 11%;
+    }
+
+    .b-cart .searchbar .btn {
+        display: flex;
+        width: 20%;
+    }
+
+    .b-cart .searchbar .btn .btnadd {
+        width: 50px;
+        height: 50px;
+        margin-top: 10px;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background: var(--primary-color);
+        position: absolute;
+    }
+    .search_box {
+        width: 325px;
+        max-width: 325px;
+        height: 45px;
+        margin-top: 5px;
+        margin-left: 480px;
+        float:right;
+        display: flex;
+    }
+
+    .search_box .input_search {
+        padding: 10px 10px 10px 30px;
+        border: 2px solid var(--brd-clr);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: calc(100% - 100px);
+        height: 40px;
+    }
+
+    .search_box .input_search:focus {
+        border-color: var(--brd-focus-clr);
+    }
+
+    .search_box button {
+        width: 60px;
+        height: 45px;
+        border: 0;
+        background: var(--primary-color);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: var(--brd-clr);
+        cursor: pointer;
+    }
+
+    .search_box button:hover {
+        background: var(--btn-hvr-clr);
+        border-color: var(--btn-hvr-clr);
+    }
+</style>
+<!-- messages -->
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+<div class='bedrum'>
+    <sl-breadcrumb>
+        <sl-breadcrumb-item>
+          Comptes d'Utilisateurs
+        </sl-breadcrumb-item>
+        <sl-breadcrumb-item>Permissions</sl-breadcrumb-item>
+      </sl-breadcrumb>
+</div>
+<div class="tab-flux">
+   <div class="b-cart">
+    <div class="searchbar">
+        <div class="btn">
+            <sl-tooltip content="Ajouter un Compte">
+                <a href="{% url 'register' %}"><button class="btnadd" id="badd">
+                    <center> <sl-icon name="person-plus"
+                            style="width:30px; height:30px;color:white;"></sl-icon>
+                        <center>
+                </button></a>
+            </sl-tooltip>
+            
+        </div>
+        <div class="search_box">
+            <form>
+            <input type="text" class="input_search" placeholder="Search by name" name="item_nameE">
+            <button><sl-icon name="search" style="width:20px; height:20px;color:white;"></sl-icon></button>
+            </form>
+        </div>
+    </div>
+    <table>
+        <tr class="header">
+            <th>
+                <center>ID</center>
+            </th>
+            <th>
+                <center>Nom D'utilisateur</center>
+            </th>
+            <th>
+                <center>Email</center>
+            </th>
+            <th>
+                <center>is ADMIN</center>
+            </th>
+            <th>
+                <center>is GJC</center>
+            </th>
+            <th>
+                <center>is GRH</center>
+            </th>
+            <th>
+                <center>is GStock</center>
+            </th>
+            <th>
+                <center>is Anonimous</center>
+            </th>
+            <th>
+                <center>Options</center>
+            </th>
+        </tr>
+        {% for use in obj %}
+        
+        <tr>
+            <td>
+                <center>{{use.pk}}</center>
+            </td>
+            <td>
+                <center>{{use.username}}</center>
+            </td>
+            <td>
+                <center>{{use.email}}</center>
+            </td>
+            <td>
+            {% if use.is_admin %}
+                <center><sl-icon name="check" style="color:green;"></sl-icon></center>
+            {% else %}
+                <center><sl-icon name="x" style="color:red;"></sl-icon></center>
+            {% endif %}
+            </td>
+            <td>
+                {% if use.is_comptable %}
+                    <center><sl-icon name="check" style="color:green;"></sl-icon></center>
+                {% else %}
+                    <center><sl-icon name="x" style="color:red;"></sl-icon></center>
+                {% endif %}
+            </td>
+            <td>
+                {% if use.is_grh %}
+                    <center><sl-icon name="check" style="color:green;"></sl-icon></center>
+                {% else %}
+                    <center><sl-icon name="x" style="color:red;"></sl-icon></center>
+                {% endif %}
+            </td>
+            <td>
+                {% if use.is_gstock %}
+                    <center><sl-icon name="check" style="color:green;"></sl-icon></center>
+                {% else %}
+                    <center><sl-icon name="x" style="color:red;"></sl-icon></center>
+                {% endif %}
+            </td>
+            <td>
+                {% if use.is_anonimous %}
+                    <center><sl-icon name="check" style="color:green;"></sl-icon></center>
+                {% else %}
+                    <center><sl-icon name="x" style="color:red;"></sl-icon></center>
+                {% endif %}
+            </td>
+            <td>
+                <center>
+                    <sl-tooltip content="Modifier">
+                        <a href="update_User/{{ use.pk }}">    <sl-icon-button id="btn-upddialoges" name="pencil"
+                            style="color: green; font-size: 22px;"></sl-icon-button></a>
+                    </sl-tooltip>
+                    <sl-tooltip content="Supprimer">
+                        <a href="delete_User/{{ use.pk }}">    <sl-icon-button name="trash" style="color: red; font-size: 22px;"></sl-icon-button></a>
+                    </sl-tooltip>
+                </center>    
+            </td>
+            
+        </tr>
+        {% endfor %}
+     
+    </table>
+   </div>
+</div>
+
+{% endblock %}

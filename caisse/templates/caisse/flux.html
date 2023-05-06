@@ -1,0 +1,695 @@
+{% extends 'comptes/dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .tab-flux {
+        margin-top: 10px;
+    }
+
+    body.dark table {
+        border: none;
+        color: white;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 96%;
+        height: 70px;
+        margin-left: 16px;
+        margin-top: 8px;
+        border: 1px solid #bdc3c7;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+
+    }
+
+    tr {
+        transition: all .2s ease-in;
+        cursor: pointer;
+    }
+
+    td,
+    th {
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        height: 35px;
+    }
+
+    .header {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    tr:hover {
+        transform: scale(1.008);
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    @media only screen and (max-width:768px) {
+        table {
+            width: 90%;
+        }
+    }
+
+    .sidebar.close~.home .b-cart {
+        width: 940px;
+        margin-left: 25px;
+    }
+
+    .b-cart {
+        width: 800px;
+        height: 550px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        margin-left: 25px;
+    }
+
+    .carttops {
+        width: 98%;
+        height: 35%;
+        margin-left: 15px;
+        margin-top: 12px;
+        display: flex;
+    }
+
+    .b-cart .carttops .stat span {
+        display: flex;
+        flex-direction: column;
+        margin-left: 28px;
+        margin-top: 18px;
+        font-size: 1.2rem;
+    }
+
+    .b-cart .carttops .stat {
+        width: 60%;
+        font-size: 1.2rem;
+
+
+    }
+
+    .b-cart .carttops .act {
+        display: flex;
+        margin-left: 38px;
+        width: 30%;
+        flex-direction: column;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cartbottoms {
+        width: 98%;
+        height: 64%;
+        margin-left: 15px;
+        margin-top: 2px;
+        display: flex;
+
+    }
+
+    .b-car {
+        width: 800px;
+        height: 560px;
+        border-radius: 20px;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        margin-left: 25px;
+    }
+
+    .sidebar.close~.home .b-car {
+        width: 940px;
+        margin-left: 25px;
+    }
+
+    .btn-act {
+        border: none;
+        cursor: pointer;
+        color: rgb(0, 120, 255);
+        background: none;
+        margin-top: 18px;
+        font-size: 16px;
+        font-family: 'Poppins';
+    }
+
+    .dialogeD {
+        width: 62vw;
+        height: 78vh;
+        display: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 25px;
+    }
+
+    .dialogeD .dialogcloseD {
+        width: 4vh;
+        height: 4vh;
+        border-radius: 6px;
+        background: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        box-shadow: 0PX 0PX 5PX -1PX;
+        float: right;
+    }
+
+    .dialogeD .dialogcloseD button {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        background: transparent;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: aliceblue;
+    }
+
+    .dialogeD .dialogcontent {
+        width: 50%;
+        height: 80%;
+        background: var(--bg-dialog);
+        border-radius: 15px;
+        overflow-y: auto;
+
+    }
+
+    .dialogeE {
+        width: 62vw;
+        height: 78vh;
+        display: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 25px;
+    }
+
+    .dialogeE .dialogcloseE {
+        width: 4vh;
+        height: 4vh;
+        border-radius: 6px;
+        background: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        box-shadow: 0PX 0PX 5PX -1PX;
+        float: right;
+    }
+
+    .dialogeE .dialogcloseE button {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        background: transparent;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: aliceblue;
+    }
+
+    .dialogeE .dialogcontent {
+        width: 50%;
+        height: 80%;
+        background: var(--bg-dialog);
+        border-radius: 15px;
+        overflow-y: auto;
+
+    }
+
+    .dialogeS {
+        width: 62vw;
+        height: 35vh;
+        display: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 25px;
+    }
+
+    .dialogeS .dialogcloseS {
+        width: 4vh;
+        height: 4vh;
+        border-radius: 6px;
+        background: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        box-shadow: 0PX 0PX 5PX -1PX;
+        float: right;
+    }
+
+    .dialogeS .dialogcloseS button {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        background: transparent;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: aliceblue;
+    }
+
+    .dialogeS .dialogcontent {
+        width: 50%;
+        height: 80%;
+        background: var(--bg-dialog);
+        border-radius: 15px;
+        overflow-y: auto;
+
+    }
+
+
+    .inp-dia {
+        margin-top: 35px;
+        width: 70%;
+        color: var(--text-color)
+    }
+
+    .add-dia {
+        width: 38%;
+        margin-top: 30px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 16px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+
+    #chart {
+        margin-left: 30px;
+    }
+
+    .sidebar.close~.home .b-cart .fchart {
+        width: 98%;
+        height: 98%;
+    }
+
+    .sidebar.close~.home .b-cart #chart {
+        margin-left: 100px;
+    }
+
+    .fchart {
+        width: 94%;
+        height: 100%;
+    }
+
+    .b-car .searchbar {
+        width: 96%;
+        margin-bottom: 5px;
+        display: flex;
+        height: 11%;
+    }
+
+    .b-car .searchbar .btn {
+        display: flex;
+        width: 20%;
+    }
+
+    .b-car .searchbar .btn .btnadd {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background: var(--primary-color);
+        position: absolute;
+    }
+
+
+
+    .search_box {
+
+        width: 325px;
+        max-width: 325px;
+        height: 45px;
+        margin-bottom: 6px;
+        margin-left: 470px;
+        display: flex;
+    }
+
+    .search_box .input_search {
+        padding: 10px 10px 10px 35px;
+        border: 2px solid var(--brd-clr);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: calc(100% - 100px);
+        height: 45px;
+    }
+
+    .search_box .input_search:focus {
+        border-color: var(--brd-focus-clr);
+    }
+
+    .search_box button {
+        width: 60px;
+        height: 45px;
+        border: 0;
+        background: var(--primary-color);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: var(--brd-clr);
+        cursor: pointer;
+    }
+
+    .search_box button:hover {
+        background: var(--btn-hvr-clr);
+        border-color: var(--btn-hvr-clr);
+    }
+</style>
+<!-- messages -->
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+<div class='bedrum'>
+    <sl-breadcrumb>
+        <sl-breadcrumb-item>
+            Journal de Caisse
+        </sl-breadcrumb-item>
+        <sl-breadcrumb-item>Flux d'Operations</sl-breadcrumb-item>
+    </sl-breadcrumb>
+</div>
+<div class="tab-flux">
+    <sl-tab-group placement="start">
+        <sl-tab slot="nav" panel="custom">Tableau Recapitulatif des Operations</sl-tab>
+        <sl-tab slot="nav" panel="general">Statistiques</sl-tab>
+
+        <sl-tab-panel name="general">
+
+            <div class="b-cart">
+
+                <div class="carttops">
+                    <div class="stat">
+                        <center>
+                            <h3> Infos</h3>
+                        </center>
+
+                        <span>⫸Solde initial: {{ si }} FCFA</span>
+                        <span>⫸Total Encaissement: {{ somE }} FCFA</span>
+                        <span>⫸Total Decaissement: {{ somD }} FCFA</span>
+                        <span>⫸Solde Final: {{ sf }} FCFA</span>
+                    </div>
+                    <div class="act">
+                        <center>
+                            <h3> Les Actions</h3>
+                        </center>
+                        <a href="update_SoldeI/1"><button class="btn-act" id="btn-dialogeS">🖋️ Modifier le solde
+                                initial</button></a>
+                        <a href="printcaisse"><button class="btn-act">🖨️ Imprimer le journal de caisse</button></a>
+                    </div>
+
+
+
+                </div>
+                <div class="cartbottoms">
+                    <div class="fchart">
+                        <canvas id="chart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </sl-tab-panel>
+        <sl-tab-panel name="custom">
+            <div class="b-car">
+                <sl-tab-group activation="manual">
+                    <sl-tab slot="nav" panel="general">Encaissement</sl-tab>
+                    <sl-tab slot="nav" panel="custom">Decaissement</sl-tab>
+                    <sl-tab-panel name="general">
+                        <center>
+                            <div class="dialogeE">
+                                <div class="dialogcontent">
+
+                                    <div class="dialogcloseE"><button>X</button></div>
+                                    <center>
+                                        <h3>Ajouter un Encaissement</h3>
+                                        <form method="POST" action="{% url 'createOperation' %}">
+                                            {% csrf_token %}
+                                            <sl-input class="inp-dia" placeholder="Reference"
+                                                name="reference"></sl-input>
+                                            <sl-input class="inp-dia" placeholder="Libelle" name="libele"></sl-input>
+                                            <sl-input class="inp-dia" type="number" placeholder="Montant"
+                                                name="montant"></sl-input>
+                                            <sl-input class="inp-dia" type="date" placeholder="Date"
+                                                name="date"></sl-input>
+                                            <sl-input name="typeO" value="Encaissement"
+                                                style="display:none;"></sl-input>
+                                            <button class="add-dia"><sl-icon slot="prefix" name="plus"></sl-icon>
+                                                Ajouter</button>
+                                        </form>
+                                    </center>
+                                </div>
+                            </div>
+                            
+                        </center>
+
+
+                        <div class="searchbar">
+                            <div class="btn">
+                                <sl-tooltip content="Ajouter un Encaissement">
+                                    <button class="btnadd" id="btn-dialogeE">
+                                        <center> <sl-icon name="plus"
+                                                style="width:30px; height:30px;color:white;"></sl-icon>
+                                            <center>
+                                    </button>
+                                </sl-tooltip>
+                            </div>
+                            <div class="search_box">
+                                <form>
+                                    <input type="text" class="input_search" placeholder="Search by Reference"
+                                        name="item_nameE">
+                                    <button><sl-icon name="search"
+                                            style="width:20px; height:20px;color:white;"></sl-icon></button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <table>
+
+                            <tr class="header">
+
+                                <th>
+                                    <center>Reference</center>
+                                </th>
+                                <th>
+                                    <center>Libelle</center>
+                                </th>
+                                <th>
+                                    <center>Montant</center>
+                                </th>
+                                <th>
+                                    <center>Date</center>
+                                </th>
+                                <th>
+                                    <center>Options</center>
+                                </th>
+                            </tr>
+
+                            {% for obs in objs %}
+                            <tr>
+
+
+                                <td>
+                                    <center>{{ obs.reference}} </center>
+                                </td>
+                                <td>
+                                    <center> {{ obs.libele}}</center>
+                                </td>
+                                <td>
+                                    <center>{{ obs.montant}} FCFA</center>
+                                </td>
+                                <td>
+                                    <center>{{ obs.date}}</center>
+                                </td>
+                                <td>
+                                    <center>
+
+                                        <sl-tooltip content="Modifier">
+                                            <a href="updOperation/{{ obs.pk }}"> <sl-icon-button id="btn-upddialogeE"
+                                                    name="pencil"
+                                                    style="color: green; font-size: 22px;"></sl-icon-button></a>
+                                        </sl-tooltip>
+                                        <sl-tooltip content="Supprimer">
+                                            <a href="delete_O/{{ obs.pk }}"> <sl-icon-button name="trash"
+                                                    style="color: red; font-size: 22px;"></sl-icon-button></a>
+                                        </sl-tooltip>
+                                    </center>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+
+
+                        </table>
+                    </sl-tab-panel>
+                    <sl-tab-panel name="custom">
+
+                        <div class="searchbar">
+                            <div class="btn">
+                                <sl-tooltip content="Ajouter un Decaissement">
+                                    <button class="btnadd" id="btn-dialogeD">
+                                        <center> <sl-icon name="plus"
+                                                style="width:30px; height:30px;color:white;"></sl-icon>
+                                            <center>
+                                    </button>
+                                </sl-tooltip>
+                            </div>
+                            <div class="search_box">
+                                <form>
+                                    <input type="text" class="input_search" placeholder="Search by Reference"
+                                        name="item_nameD">
+                                    <button><sl-icon name="search"
+                                            style="width:20px; height:20px;color:white;"></sl-icon></button>
+                                </form>
+                            </div>
+                        </div>
+                        <center>
+                            <div class="dialogeD">
+                                <div class="dialogcontent">
+                                    <div class="dialogcloseD"><button>X</button></div>
+                                    <center>
+                                        <h3>Ajouter un Decaissement</h3>
+                                        <form method="POST" action="{% url 'createOperation' %}">
+                                            {% csrf_token %}
+                                            <sl-input class="inp-dia" placeholder="Reference"
+                                                name="reference"></sl-input>
+                                            <sl-input class="inp-dia" placeholder="Libelle" name="libele"></sl-input>
+                                            <sl-input class="inp-dia" type="number" placeholder="Montant"
+                                                name="montant"></sl-input>
+                                            <sl-input class="inp-dia" type="date" placeholder="Date"
+                                                name="date"></sl-input>
+                                            <sl-input name="typeO" value="Decaissement"
+                                                style="display:none;"></sl-input>
+                                            <button class="add-dia"><sl-icon slot="prefix" name="plus"></sl-icon>
+                                                Ajouter</button>
+                                        </form>
+                                    </center>
+                                </div>
+                            </div>
+                        </center>
+                        <table>
+                            <tr class="header">
+
+                                <th>
+                                    <center>Reference</center>
+                                </th>
+                                <th>
+                                    <center>Libelle</center>
+                                </th>
+                                <th>
+                                    <center>Montant</center>
+                                </th>
+                                <th>
+                                    <center>Date</center>
+                                </th>
+                                <th>
+                                    <center>Options</center>
+                                </th>
+                            </tr>
+                            {% for ob in obj %}
+
+                            <tr>
+                                <td>
+                                    <center>{{ ob.reference}}</center>
+                                </td>
+                                <td>
+                                    <center>{{ ob.libele}}</center>
+                                </td>
+                                <td>
+                                    <center>{{ ob.montant}}</center>
+                                </td>
+                                <td>
+                                    <center>{{ ob.date}}</center>
+                                </td>
+                                <td>
+                                    <center>
+
+                                        <sl-tooltip content="Modifier">
+                                            <a href="updOperation/{{ ob.pk }}"> <sl-icon-button id="btn-upddialogeE"
+                                                    name="pencil"
+                                                    style="color: green; font-size: 22px;"></sl-icon-button></a>
+                                        </sl-tooltip>
+                                        <sl-tooltip content="Supprimer">
+                                            <a href="delete_O/{{ ob.pk }}"> <sl-icon-button name="trash"
+                                                    style="color: red; font-size: 22px;"></sl-icon-button></a>
+                                        </sl-tooltip>
+                                </td>
+                                </center>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+                    </sl-tab-panel>
+
+                </sl-tab-group>
+        </sl-tab-panel>
+    </sl-tab-group>
+</div>
+
+
+
+<script>
+    const dialogeE = document.querySelector(".dialogeE");
+    const dialogeD = document.querySelector(".dialogeD");
+    const OpenDialogeE = document.querySelector("#btn-dialogeE");
+    const OpenDialogeD = document.querySelector("#btn-dialogeD");
+    const closedialogE = document.querySelector(".dialogcloseE button");
+    const closedialogD = document.querySelector(".dialogcloseD button");
+
+    OpenDialogeE.addEventListener('click', () => {
+        dialogeE.style.display = 'flex'
+    })
+    OpenDialogeD.addEventListener('click', () => {
+        dialogeD.style.display = 'flex'
+    })
+
+
+    closedialogE.addEventListener('click', () => {
+        dialogeE.style.display = 'none'
+    })
+    closedialogD.addEventListener('click', () => {
+        dialogeD.style.display = 'none'
+    })
+
+
+
+    var xValues = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam']
+    new Chart("chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [{{agE}}, {{bgE}},{{cgE}}, {{dgE}}, {{egE}}, {{fgE}}],
+        borderColor: "#695CFE",
+        tension: 0.25,
+        label: 'Encaissement',
+        fill: false
+            }, {
+            data: [{{agD}}, {{bgD}}, {{cgD}}, {{dgD}}, {{egD}}, {{fgD}}],
+        tension: 0.25,
+        label: 'Decaissement',
+        borderColor: "rgb(75, 192, 192)",
+        fill: false
+            }]
+        },
+        options: {
+        legend: { display: false }
+    }
+    });
+
+</script>
+
+{% endblock %}

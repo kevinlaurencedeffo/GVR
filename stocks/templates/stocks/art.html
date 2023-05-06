@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body style="font-size: 14px;">
+    
+    <table>
+        <tr>
+            <td>
+                NET EXPRESS CORP SARL <br>
+                Yaoundé- Ngoa-Ekéllé<br>
+                +237655122009/ +237696483771<br>
+                Netxpress91@gmail.com
+            </td>
+            <td>
+                <pre style="width=120px;height:100px;">                        <img src="media/assets/nec.jpg" ></pre>
+            </td>
+        </tr>
+    </table>
+   
+    <table>
+        <tr>
+            
+            <td style="font-size: 20px; margin-top: 30px; margin-left:240px;">
+                Fiche de Stocks
+            </td>
+            
+        </tr>
+        <tr>
+            <td>Date: {{ date }}</td>
+        </tr>
+    </table>
+
+<table style="margin-top: 10px; border: solid 0.02px rgb(187, 183, 183); height: 30px;">
+        
+    <tr>
+        <th>
+            Nom de l'Article
+        </th>
+        <th>
+            Libelle
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Stock Initial
+        </th>
+        
+        <th>
+            Quantite
+        </th>
+        <th>
+            Prix
+        </th>
+        <th>
+            Montant Total
+        </th>
+        <th>
+            Stock Final
+        </th>
+        <th>
+            Date
+        </th>
+    
+    </tr>
+    {% for ob in obj %}
+    <tr>
+        <td style="margin-left:4px;">
+            {{ob.article_name}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.libele}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.typea}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.si}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.prix}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.quantite}}
+        </td>
+        
+        <td style="margin-left:4px;">
+            {{ob.mnt}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.soldef}}
+        </td>
+        <td style="margin-left:4px;">
+            {{ob.date}}
+        </td>
+        
+    </tr>
+    
+    {% endfor %}
+</table>
+<script>
+    
+</script>
+</body>
+</html>

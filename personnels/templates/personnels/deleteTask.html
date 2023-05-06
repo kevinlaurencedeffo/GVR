@@ -1,0 +1,50 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+
+<style>
+        
+    .cart-del{
+        min-width: 400px;
+        min-height: 300px;
+        display: inline;
+        margin:200px 50px 50px 300px;
+    }
+    .x{
+        background-color: red;
+        color: white;
+        width: 25%;
+        margin: 15px;
+        border-radius: 6px;
+        font-size: 18px;
+        height: 35px;
+        cursor: pointer;
+        border: none;
+        
+    }
+    .back{
+        color: white;
+        width: 25%;
+        margin: 25px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 35px;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+
+
+
+    <div class="cart-del"><center>
+        <h3 style="color: #99a1a1;">voulez vous vraiment supprimer cette Tache ??</h3>
+
+    <form method="POST" action="">    
+        {% csrf_token %}
+    <button type="submit" class="x">Supprimer<sl-icon slot="suffix" name="x"></sl-icon></button>
+</form>
+<a href="{% url 'grh' %}"><button class="back"><sl-icon slot="suffix" name="arrow-left"></sl-icon> Retour</button></a>
+</center>
+    </div>
+
+{% endblock %}

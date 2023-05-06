@@ -1,0 +1,21 @@
+
+    <h3>Ajouter un Article</h3>
+    {{msg}}
+</center>
+<form method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <select name="typea" class="inp-dia">
+        <option name="typea">Entree</option>
+        <option name="typea">Sortie</option>
+    </select>
+    <input class="inp-dia" type="number" placeholder="Solde Initial" name="si"><br/>
+<input class="inp-dia" type="text" placeholder="Nom" name="article_name"><br/>
+<input class="inp-dia" type="text" placeholder="libele" name="libele">
+<input class="inp-dia" type="number" placeholder="Prix" name="prix"><br/>
+<input class="inp-dia" type="number" placeholder="Quantite" name="quantite"><br/>
+<input type="file" name="img">
+<input class="inp-dia" type="date" placeholder="Date" name="date"><br/>
+<button class="add-dia" type="submit"><sl-icon slot="prefix" name="plus-lg"></sl-icon> Ajouter</button>
+</form>
+</div>
+</center>

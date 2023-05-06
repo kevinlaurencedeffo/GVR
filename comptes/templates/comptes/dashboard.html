@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+   
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Ressources</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0/dist/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0/dist/shoelace.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    font-family: 'Poppins' sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    
+    --body-color: #E4E9F7;
+    --sidebar-color: #fff;
+    --primary-color:#695CFE;
+    --primary-color-light:#F6F5FF;
+    --toggle-color:#ddd;
+    --big-cartcolor:#eeeeee;
+    --bg-dialog: #ffffff;
+    --bg-clr: #f7f6fb;
+    --white: #fff;
+    --text-clr: #6c6d76;
+    --brd-clr: #eff0f9;
+    --brd-focus-clr: #d2d9f0;
+    --primary-clr: #6d7fe2;
+    --btn-hvr-clr: #6e7cc7;
+    --text-color:#555560;
+    --tran-02:all 0.2s ease;
+    --tran-03:all 0.3s ease;
+    --tran-04:all 0.4s ease;
+    --tran-05:all 0.5s ease;
+    
+}
+
+body{
+    height: 100vh;
+    background: var(--body-color);
+    transition: var(--tran-05);
+
+}
+
+body.dark{
+    --body-color: #18191A;
+    --sidebar-color: #242526;
+    --primary-color-light:#3A3B3C;
+    --big-cartcolor:#242526;
+    --bg-dialog:#333333;
+    --toggle-color:#FFF;
+    --text-color:#CCC; 
+}
+
+.sidebar.close header .toggle{
+    transform: translateY(-50%);
+    
+}
+
+body.dark .sidebar header .toggle{
+    color: var(--text-color);
+}
+
+
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 210px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+}
+
+.sidebar.close{
+    width: 64px;
+}
+
+.sidebar .image-text img{
+    width: 90%;
+    border-radius: 6px;
+    
+}
+
+.sidebar header .image-text{
+    margin-left:4px;
+    margin-top: 30px;
+}
+.sidebar.close .text{
+    opacity: 0;
+}
+.sidebar.close .image{
+    max-width:60px;
+}
+.sidebar .text{
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tran-04);
+    white-space: nowrap;
+    
+}
+.sidebar .image{
+    min-width: 60px;
+    font-size: 12px;
+    max-width:210px;
+    height:60px;
+    
+
+}
+header .image-text .header-text{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.sidebar .menu{
+    margin-top: 35px;
+}
+
+.header-text .name{
+    font-weight: 800;
+}
+.sidebar header .toggle{
+    position: absolute;
+    left: 93%;
+    transform: translateY(-50%) rotate(180deg);
+    background: var(--primary-color);
+    height: 26px;
+    width: 26px;
+    cursor: pointer;
+    display: flex;
+    transition: var(--tran-03);
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--sidebar-color);
+    font-size: 22px;
+}
+
+.sidebar header{
+    position: relative;
+
+}
+.sidebar li{
+    height: 45px;
+    margin-top: 5px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar li .icon{
+    font-size: 20px;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.sidebar li .text, .sidebar li .icon{
+    color: var(--text-color);
+    transition: var(--tran-02);
+
+}
+
+.sidebar li a{
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    transition: var(--tran-04);
+    width: 100%;
+}
+.sidebar li a:hover{
+    background: var(--primary-color);
+
+}
+
+.sidebar li a:hover .icon, .sidebar li a:hover .text{
+    color: var(--sidebar-color);
+}
+body.dark .sidebar li a:hover .icon, body.dark .sidebar li a:hover .text{
+    color: var(--text-color);
+}
+
+.sidebar .menu-bar{
+    height: calc(100% 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.menu-bar .mode{
+    position: relative;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+    
+}
+
+.menu-bar .mode .moon-sun{
+    height: 50px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+
+}
+
+.menu-bar .mode .moon{
+    position: absolute;
+    margin-left: 21px;
+    transition: var(--tran-03);
+}
+
+.menu-bar .mode .toggle-switch{
+    height: 100%;
+    display: flex;
+    position: absolute;
+    right: 0;
+    background: var(--primary-color-light);
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    transition: var(--tran-05);
+    cursor: pointer;
+    min-width: 60px;
+}
+.toggle-switch .switch{
+    height: 22px;
+    width: 44px;
+    position: relative;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
+}
+.switch::before{
+    height: 15px;
+    width: 15px;
+    background: var(--sidebar-color);
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: var(--tran-03);
+    left: 5px;
+}
+
+body.dark .switch::before{
+    left: 24px;
+}
+
+body.dark .menu-bar .mode span.moon{
+    opacity: 1;
+}
+
+.home{
+    position: relative;
+    left: 210px;
+    height: 96vh;
+    border: solid 0.1px var(--body-color);
+    margin:0;
+    width: 84%;
+    background: var(--body-color);
+    transition: var(--tran-05);
+}
+.home .text{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 8px 40px;
+}
+
+.sidebar.close ~ .home{
+    left: 68px;
+    margin:0;
+    width: 94%;
+}
+
+
+.sidebar.close ~ .home .small-cart .smcart{
+    margin-left: 15px;
+    width:315px;
+}
+.sidebar.close ~ .home .big-cart .graph-cart{
+    margin-left: 15px;
+    width:520px;
+}
+.sidebar.close ~ .home .big-cart .tb-cart{
+    margin-left: 20px;
+    width:340px;
+
+}
+
+
+.all-cart{
+    display:flex;
+    flex-direction:column;
+    color: var(--text-color);
+}
+
+.home .all-cart .small-cart{
+   display:flex;
+   flex-direction: row;
+   color: var(--text-color);
+   margin-left:15px; 
+   margin-top:20px; 
+}
+
+.smcart{
+    width:330px;
+    height:200px;
+    border-radius:10px;
+    display: flex;
+    flex-direction: column;
+    color:white;
+    background:var(--primary-color);
+    margin-left:35px;
+}
+.smcart .cart-content{
+    font-size: 1.7rem;
+    justify-content:center;
+    margin-top:32px;
+    margin-left:27px;
+    align-items:center;
+}
+.smcart .cart-header{
+    font-size: 1.1rem;
+    margin-left:27px;
+    margin-top:40px;
+    align-items:center;
+    justify-content:center;
+}
+
+.big-cart{
+    display:flex;
+   flex-direction: row;
+   margin-left:15px;
+   color: var(--text-color);
+    margin-top: 30px;
+}
+.graph-cart{
+    width:580px;
+    height:345px;
+    border-radius:14px;
+    color:var(--text-color);
+    background:var(--primary-color-light);
+    margin-left:30px;
+}
+.tb-cart{
+    width:380px;
+    height:345px;
+    border-radius:14px;
+    color:var(--text-color);
+    background:var(--primary-color-light);
+    margin-left:45px;
+}
+.bedrum{
+    margin-top:10px;
+    margin-left:15px;
+    color: var(--text-color);
+}
+
+
+.sidebar.close ~ .home .big-cart .tb-cart .tab-main{
+    width: 280px;
+    margin-left:30px;
+}
+
+
+.tab-main{
+    border-collapse: collapse;
+    width: 330px;
+    height:50px;
+    margin-left:45px;
+    margin-top:16px;
+    
+    
+}
+.tab-main th, .tab-main td{
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+
+}
+#myChart{
+    color: var(--text-color);
+    width:96%;
+    margin-top:10px;
+    height:96%;
+    
+}
+.sidebar.close ~ .home .big-cart #myChart{
+    margin-top:20px;
+}
+.sidebar.close ~ .home .big-cart #fil, .sidebar.close ~ .home .small-cart #fini{
+    display:block;
+    
+}
+.sidebar.close ~ .home .big-cart #mil{
+    margin-left:20px;
+    width: 430px;
+}
+#mil{
+    width: 430px;
+    height:345px;
+    border-radius:14px;
+    margin-left:50px;
+    color:var(--text-color);
+    background:var(--primary-color-light);
+    
+}
+#fini{
+    display:none;
+}
+.sidebar.close ~ .home .small-cart #fil{
+    width:300px;
+}
+#fil{
+    display:none;
+}
+
+.bottom-content{
+    margin-top:80px;
+}
+
+.sidebar.close ~ .home .big-cart #mychar{
+    margin-left:30px;
+}
+#mychar{
+    width:70px;
+    margin-left:40px;
+    height:40%;
+}
+
+</style>
+<body>
+    <!-- messages -->
+    {% if messages %}
+        {% for message in messages %}  
+        <script>        
+            alert("{{message}}");
+        </script>
+        {% endfor %}
+    {% endif %}
+    
+<nav class="sidebar close">
+    <header>
+        <pre class="toggle">»</pre>
+        <div class="image-text">
+            <span class="image">
+                <img src="{% static 'images/nec.jpg' %}" alt="logo">
+            </span>
+            <div class="text header-text">
+                <span class="name" style="font-size: 12px;">{{user.username}} ({{user.email}})</span>
+                
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            
+            <ul class="menu-links">
+                {% if user.is_admin %}
+                <li class="nav-link color">
+                    <a href="{% url 'administrateur' %}">
+                      <span class="icon">  ⊞</span>
+                      <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link ">
+                    <a href="{% url 'accounts' %}">
+                      <span class="icon"> <sl-icon name="person"></sl-icon></span>
+                      <span class="text nav-text">Comptes d'utilisateurs</span>
+                    </a>
+                </li>
+                <li class="nav-link ">
+                    <a href="{% url 'flux' %}">
+                      <span class="icon"> <sl-icon name="wallet"></sl-icon></span>
+                      <span class="text nav-text">Journal de Caisse</span>
+                    </a>
+                </li>
+                <li class="nav-link " >
+                    <a href="{% url 'grh' %}">
+                      <span class="icon">👷🏻‍♂️</span>
+                      <span class="text nav-text">Gestion Du Personnel</span>
+                    </a>
+                </li>
+                <li class="nav-link " >
+                    <a href="{% url 'gstock' %}">
+                      <span class="icon"> <sl-icon name="cart"></sl-icon></span>
+                      <span class="text nav-text">Gestion des stocks</span>
+                    </a>
+                </li>
+                {% elif user.is_comptable %}
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'administrateur' %}">
+                      <span class="icon">  ⊞</span>
+                      <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'accounts' %}">
+                      <span class="icon"> <sl-icon name="person"></sl-icon></span>
+                      <span class="text nav-text">Comptes d'utilisateurs</span>
+                    </a>
+                </li>
+                <li class="nav-link ">
+                    <a href="{% url 'flux' %}">
+                      <span class="icon"> <sl-icon name="wallet"></sl-icon></span>
+                      <span class="text nav-text">Journal de Caisse</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'grh' %}">
+                      <span class="icon">👷🏻‍♂️</span>
+                      <span class="text nav-text">Gestion Du Personnel</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'gstock' %}">
+                      <span class="icon"> <sl-icon name="cart"></sl-icon></span>
+                      <span class="text nav-text">Gestion des stocks</span>
+                    </a>
+                </li>
+                {% elif user.is_grh %}
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'administrateur' %}">
+                      <span class="icon">  ⊞</span>
+                      <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'accounts' %}">
+                      <span class="icon"> <sl-icon name="person"></sl-icon></span>
+                      <span class="text nav-text">Comptes d'utilisateurs</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'flux' %}">
+                      <span class="icon"> <sl-icon name="wallet"></sl-icon></span>
+                      <span class="text nav-text">Journal de Caisse</span>
+                    </a>
+                </li>
+                <li class="nav-link " >
+                    <a href="{% url 'grh' %}">
+                      <span class="icon">👷🏻‍♂️</span>
+                      <span class="text nav-text">Gestion Du Personnel</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'gstock' %}">
+                      <span class="icon"> <sl-icon name="cart"></sl-icon></span>
+                      <span class="text nav-text">Gestion des stocks</span>
+                    </a>
+                </li>
+                {% elif user.is_gstock %}
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'administrateur' %}">
+                      <span class="icon">  ⊞</span>
+                      <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'accounts' %}">
+                      <span class="icon"> <sl-icon name="person"></sl-icon></span>
+                      <span class="text nav-text">Comptes d'utilisateurs</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'flux' %}">
+                      <span class="icon"> <sl-icon name="wallet"></sl-icon></span>
+                      <span class="text nav-text">Journal de Caisse</span>
+                    </a>
+                </li>
+                <li class="nav-link " style="pointer-events: none;">
+                    <a href="{% url 'grh' %}">
+                      <span class="icon">👷🏻‍♂️</span>
+                      <span class="text nav-text">Gestion Du Personnel</span>
+                    </a>
+                </li>
+                <li class="nav-link " >
+                    <a href="{% url 'gstock' %}">
+                      <span class="icon"> <sl-icon name="cart"></sl-icon></span>
+                      <span class="text nav-text">Gestion des stocks</span>
+                    </a>
+                </li>
+                
+                {% endif %}
+                
+                <li class="nav-link ">
+                    <a href="update_Me/{{ user.pk }}">
+                      <span class="icon"><sl-icon name="gear"></sl-icon>  </span>
+                      <span class="text nav-text">Settings</span>
+                    </a>
+                </li>                
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="nav-link">
+                <a href="{% url 'Logout' %}">
+                  <span class="icon">  ←</span>
+                  <span class="text nav-text">Logout</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="moon-sun">
+                    <span class="moon">🌙</span>
+                </div>
+                <span class="mode-text text">Dark Mode</span>
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<section class="home">
+    {% block content %}
+        
+  
+    <div class='bedrum'>
+    <sl-breadcrumb>
+        <sl-breadcrumb-item>
+          Dashboard
+        </sl-breadcrumb-item>
+        <sl-breadcrumb-item>Journal de caisse</sl-breadcrumb-item>
+      </sl-breadcrumb></div>
+    <div class="all-cart">
+      <div class="small-cart">
+            <div class="smcart">
+                <div class="cart-header">
+                    (+)Total Encaissement Journalier
+                </div>
+                <div class="cart-content">
+                   <pre>${{objs}} FCFA  📈</pre>
+                </div>
+            </div>
+            <div class="smcart">
+                <div class="cart-header">
+                    (-)Total Decaissement Journalier
+                </div>
+                <div class="cart-content">
+                   <pre>${{obj}} FCFA  📉</pre>
+                </div>
+            </div>
+            <div class="smcart">
+                <div class="cart-header">
+                    👷🏻 Total Employe
+                </div>
+                <div class="cart-content">
+                    <pre>   {{objp}}     📶</pre>
+                </div>
+            </div>
+            <div class="smcart" id="fini">
+                <div class="cart-header">
+                   <sl-icon name="cart"></sl-icon> Total Article En Stocks
+                </div>
+                <div class="cart-content">
+                    <pre>   {{obja}}     📊</pre>
+                </div>
+            </div>
+      </div>
+      <div class="big-cart">
+    <div class="graph-cart">
+            <div class="graph-header">
+
+            </div>
+            <div class="graph-content">
+                <div class="">
+                    <center><h4 style="margin-top:20px;">graph hebdomadaire des Encaissements/Decaissements</h4></center>
+                <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="cart-mil" id="mil">
+            
+                <canvas id="mychar"></canvas>
+            
+        </div>
+        <div class="tb-cart" id="fil">
+            <div class="tb-header">
+
+            </div>
+            <div class="tb-content">
+                <center><h3>Tableau des Comptes Non Valide</h3></center>
+                
+                <table class="tab-main">
+                    <center> <tr>
+                        <th> Username </th>
+                        <th> Email </th>
+                        <th> status </th>
+                    </tr></center>
+                <center>
+                    {% for us in use %}
+                    <tr>
+                    <td>{{us.username}}</td>
+                    <td>{{us.email}}</td>
+                    <td>Anonymous</td>
+                </tr>
+                {% endfor %}
+            </center>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+</section>
+<script src="{% static 'js/script_comptable.js' %}"></script>
+<script>
+    var xValues = ['lun','mar','mer','jeu','ven','sam']
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      data: [{{agE}}, {{bgE}},{{cgE}}, {{dgE}}, {{egE}}, {{fgE}}],
+      borderColor: "#695CFE",
+      tension:0.25,
+      label: 'Encaissement',
+      fill: false
+    },{
+      data: [{{agD}}, {{bgD}}, {{cgD}}, {{dgD}}, {{egD}}, {{fgD}}],
+      tension:0.25,
+      label: 'Decaissement',
+      borderColor: "rgb(75, 192, 192)",
+      fill: false
+    }]
+  },
+  options: {
+    legend: {display: false}
+  }
+});
+</script>
+<script>
+    const data = {
+        labels: [
+          'Nouveau',
+          'En Cour',
+          'Accomplis'
+        ],
+        datasets: [{
+          label: 'Les Taches hebdomadaire:',
+          data: [{{taskE}}, {{taskN}}, {{taskR}}],
+          backgroundColor: [
+            'rgb(54, 162, 235)',
+            'rgb(255, 99, 132)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+      new Chart("mychar", {
+        type: 'doughnut',
+        data: data,
+      });
+</script>
+
+
+</body>
+</html>

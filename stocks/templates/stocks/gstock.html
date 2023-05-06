@@ -1,0 +1,334 @@
+{% extends 'comptes/dashboard.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    .tab-flux{
+        margin-top: 30px;
+    }
+    body.dark table{
+        border:none;
+        color:white;
+    }
+    table{
+        border-collapse: collapse;
+        width: 96%;
+        height:70px;
+        margin-left:16px;
+        margin-top:6px;
+        border: 1px solid #bdc3c7;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+
+    }
+    tr{
+        transition: all .2s ease-in;
+        cursor: pointer;
+    }
+    td,th{
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th{
+        height:35px;
+    }
+    .header{
+        background-color: var(--primary-color);
+        color: white;
+    }
+    tr:hover{
+        transform: scale(1.008);
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+    }
+    @media only screen and (max-width:768px){
+        table{
+            width: 90%;
+        }
+    }
+    .sidebar.close ~ .home .b-cart{
+        width: 1160px;
+        margin-left:65px;
+    }
+    .b-cart{
+        width: 1000px;
+        height:550px;
+        border-radius:20px;
+        display:flex;
+        flex-direction:column;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        margin-left:70px;
+    }
+    .b-cart .searchbar {
+        width: 96%;
+        margin-top: 6px;
+        display: flex;
+        height: 11%;
+    }
+
+    .b-cart .searchbar .btn {
+        display: flex;
+        width: 20%;
+    }
+
+    .b-cart .searchbar .btn .btnadd {
+        width: 50px;
+        height: 50px;
+        margin-top: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background: var(--primary-color);
+        position: absolute;
+    }
+    .b-cart .searchbar .btn .btnprint {
+        width: 50px;
+        height: 50px;
+        margin-top: 5px;
+        margin-left: 70px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background: var(--primary-color);
+        position: absolute;
+    }
+    .search_box {
+
+        width: 325px;
+        max-width: 325px;
+        height: 45px;
+        margin-top: 10px;
+        margin-left: 450px;
+        display: flex;
+    }
+
+    .search_box .input_search {
+        padding: 10px 10px 10px 35px;
+        border: 2px solid var(--brd-clr);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: calc(100% - 100px);
+        height: 45px;
+    }
+
+    .search_box .input_search:focus {
+        border-color: var(--brd-focus-clr);
+    }
+
+    .search_box button {
+        width: 60px;
+        height: 45px;
+        border: 0;
+        background: var(--primary-color);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: var(--brd-clr);
+        cursor: pointer;
+    }
+
+    .search_box button:hover {
+        background: var(--btn-hvr-clr);
+        border-color: var(--btn-hvr-clr);
+    }
+    .dialogeS {
+        width: 78vw;
+        height: 89vh;
+        display: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dialogeS .dialogcloseS {
+        width: 4vh;
+        height: 4vh;
+        border-radius: 6px;
+        background: red;
+        justify-content: center;
+        align-items: center;
+
+        box-shadow: 0PX 0PX 5PX -1PX;
+        float: right;
+    }
+
+    .dialogeS .dialogcloseS button {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        background: transparent;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: aliceblue;
+
+    }
+
+    .dialogeS .dialogcontent {
+        width: 80%;
+        height: 80%;
+        background: var(--bg-dialog);
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        overflow-y: auto;
+
+    }
+    .inp-dia {
+        margin: 9px;
+        width: 36VH;
+        height: 5vh;
+        border: solid 1px grey;
+        color: var(--text-color);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .add-dia {
+        width: 18%;
+        margin-left: 51px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+</style>
+
+<div class='bedrum'>
+    <sl-breadcrumb>
+        <sl-breadcrumb-item>
+          Stocks
+        </sl-breadcrumb-item>
+        <sl-breadcrumb-item>Entree/Sortie</sl-breadcrumb-item>
+      </sl-breadcrumb>
+</div>
+<div class="tab-flux">
+         
+            <div class="b-cart">
+                <div class="dialogeS">
+                    <center>
+                        <div class="dialogcontent">
+                            <div class="dialogcloseS"><button>X</button></div>
+                            <center>
+                                <h3>Ajouter un Article</h3>
+                            </center>
+                            <form method="POST" action="{% url 'create_Art' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <select name="typea" class="inp-dia">
+                                    <option name="typea">Entree</option>
+                                    <option name="typea">Sortie</option>
+                                </select>
+                                <input class="inp-dia" type="number" placeholder="Solde Initial" name="si"><br/>
+                            <input class="inp-dia" type="text" placeholder="Nom" name="article_name"><br/>
+                            <input class="inp-dia" type="text" placeholder="libele" name="libele">
+                            <input class="inp-dia" type="number" placeholder="Prix" name="prix"><br/>
+                            <input class="inp-dia" type="number" placeholder="Quantite" name="quantite"><br/>
+                            <sl-input type="file" name="img"></sl-input>
+                            <input class="inp-dia" type="date" placeholder="Date" name="date"><br/>
+                            <button class="add-dia" type="submit"><sl-icon slot="prefix" name="plus-lg"></sl-icon> Ajouter</button>
+                        </form>
+                        </div>
+                    </center>
+                </div>
+                <div class="searchbar">
+                    <div class="btn">
+                        <sl-tooltip content="Ajouter un Employer">
+                            <button class="btnadd" id="badd">
+                                <center> <sl-icon name="person-plus"
+                                        style="width:30px; height:30px;color:white;"></sl-icon>
+                                    <center>
+                            </button>
+                        </sl-tooltip>
+                        <sl-tooltip content="Imprimer la fiche de stock">
+                            <a href="printart"><button class="btnprint">
+                                <center> <sl-icon name="printer" style="width:30px; height:30px;color:white;"></sl-icon>
+                                    <center>
+                            </button></a>
+                        </sl-tooltip>
+                    </div>
+                    <div class="search_box">
+                        <form>
+                        <input type="text" class="input_search" placeholder="Search by name" name="item_nameE">
+                        <button><sl-icon name="search" style="width:20px; height:20px;color:white;"></sl-icon></button>
+                        </form>
+                    </div>
+                </div>
+                <table>
+                    <tr class="header">
+                        <th>
+                            <center>ID</center>
+                        </th>
+                        <th>
+                            <center>Article</center>
+                        </th>
+                        <th>
+                            <center>Libele</center>
+                        </th>
+                        <th>
+                            <center>Type</center>
+                        </th>
+                        
+                        <th>
+                            <center>Date</center>
+                        </th>
+                        <th>
+                            <center>Options</center>
+                        </th>
+                    </tr>
+                    {% for obs in obj %}
+                    
+                    <tr>
+                        <td>
+                            <center>{{obs.pk}}</center>
+                        </td>
+                        <td>
+                            <center>{{obs.article_name}}</center>
+                        </td>
+                        <td>
+                            <center>{{obs.libele}}</center>
+                        </td>
+                        <td>
+                            <center>{{obs.typea}}</center>
+                        </td>
+                        <td>
+                            <center>{{obs.date}}</center>
+                        </td>
+                        <td>
+                            <center>
+                                <sl-tooltip content="Voir">
+                                    <a href="detail_Art/{{ obs.pk }}">    <sl-icon-button id="btn-dialogeviewS" name="eye"
+                                        style="color: blue; font-size: 22px;"></sl-icon-button></a>
+                                </sl-tooltip>
+                                <sl-tooltip content="Modifier">
+                                    <a href="update_Art/{{ obs.pk }}">    <sl-icon-button id="btn-upddialoges" name="pencil"
+                                        style="color: green; font-size: 22px;"></sl-icon-button></a>
+                                </sl-tooltip>
+                                <sl-tooltip content="Supprimer">
+                                    <a href="delete_Art/{{ obs.pk }}">    <sl-icon-button name="trash" style="color: red; font-size: 22px;"></sl-icon-button></a>
+                                </sl-tooltip>
+                            </center>    
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                 
+                </table>
+            </div>
+</div>
+
+
+<script>
+    const dialogeS = document.querySelector(".dialogeS");
+    const OpenDialogeS = document.querySelector("#badd");
+    const closedialogS = document.querySelector(".dialogcloseS button");
+    OpenDialogeS.addEventListener('click', () => {
+        dialogeS.style.display = 'flex'
+    })
+    closedialogS.addEventListener('click', () => {
+        dialogeS.style.display = 'none'
+    })
+</script>
+
+{% endblock %}

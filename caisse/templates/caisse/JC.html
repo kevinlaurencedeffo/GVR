@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body style="font-size: 12px;">
+
+    <table>
+        <tr>
+            <td>
+                NET EXPRESS CORP SARL <br>
+                Yaoundé- Ngoa-Ekéllé<br>
+                +237655122009/ +237696483771<br>
+                Netexpress91@gmail.com
+            </td>
+            <td>
+                <pre style="width=120px;height:100px;">                        <img src="media/assets/nec.jpg" ></pre>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+
+            </td>
+            <td style="font-size: 25px; margin-top: 30px;">
+                Journal de Caisse
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+<table style="margin-top: 60px;">
+    <tr>
+        <td>
+            Date:
+        </td>
+        <td>
+            {{ date }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Solde Initial:
+        </td>
+        <td>
+            {{si}} FCFA
+        </td>
+    </tr>
+    <tr>
+        <td>
+            (+)Total Encaissement:
+        </td>
+        <td>
+            {{somE}} FCFA
+        </td>
+    </tr>
+    <tr>
+        <td>
+            (-)Total Decaissement:
+        </td>
+        <td>
+            {{somD}} FCFA
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Solde Final:
+        </td>
+        <td>
+            {{sf}} FCFA
+        </td>
+    </tr>
+</table>
+
+<table style="margin-top: 10px; border: solid 0.02px rgb(187, 183, 183); height: 30px;">
+        
+    <tr>
+        <th>
+            Reference
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Libelle
+        </th>
+        <th>
+            Montant
+        </th>
+    </tr>
+    {% for ob in obj %}
+    <tr>
+        <td style="margin-left: 70px;" >
+            {{ob.pk}}
+        </td>
+        <td style="margin-left: 30px;">
+            {{ob.typeO}}
+        </td>
+        <td style="margin-left: 30px;">
+            {{ob.date}}
+        </td>
+        <td style="margin-left: 2px;">
+            {{ob.libele}}
+        </td>
+        <td style="margin-left: 40px;">
+            {{ob.montant}}
+        </td>
+    </tr>
+    
+    {% endfor %}
+</table>
+</body>
+</html>

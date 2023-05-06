@@ -1,0 +1,72 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+
+    <style>
+        
+        .card-upd{
+            display: flex;
+            padding:9px;
+            justify-self: center;
+            align-self: center;
+            margin:40px 40px 65px 280px;
+            max-width: 650px;
+            max-height: 700px;
+            border-radius: 24px;
+            background: #fff;
+        }
+        .inp-dia {
+        margin: 16px;
+        width: 36VH;
+        height: 5vh;
+        border: solid 1px grey;
+        color: rgb(70, 69, 69);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .add-dia {
+        width: 18%;
+        margin: 15px;
+        border-radius: 6px;
+        background: rgb(0, 120, 255);
+        font-size: 18px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+    .inp-data{
+        align-items: center;
+        justify-content: center;
+    }
+        
+    </style>
+
+    <div class="card-upd">
+       <center><div class="inp-data">
+            <h2>Modifier L'employe {{obj.name}}</h2>
+            <form method="POST">
+                {% csrf_token %}
+            <input class="inp-dia" type="text" placeholder="Nom" name="name" value="{{ obj.name }}">
+            <input class="inp-dia" type="text" placeholder="Prenom" name="surname" value="{{ obj.surname }}"><br />
+            <input class="inp-dia" type="text" placeholder="Matricule" name="matricule" value="{{ obj.matricule }}">
+            <input class="inp-dia" type="text" placeholder="cni" name="cni" value="{{ obj.cni }}"><br />
+            <input class="inp-dia" type="text" placeholder="Nationalite" name="nationalite" value="{{ obj.nationalite }}">
+            <input class="inp-dia" type="date" placeholder="Date de Naissance" name="date" value="{{ obj.date }}"><br />
+            Sexe<select class="inp-dia" name="sexe" value="{{ obj.sexe }}">
+                <option>Homme</option>
+                <option>Femme</option>
+            </select><br />
+            <input class="inp-dia" type="email" placeholder="Email" name="email" value="{{ obj.email }}">
+            <input class="inp-dia" type="number" placeholder="Tel" name="tel" value="{{ obj.tel }}"><br />
+            <input class="inp-dia" type="text" placeholder="Adresse" name="quartier" value="{{ obj.quartier }}">
+            <input class="inp-dia" type="text" placeholder="Poste" name="poste" value="{{ obj.poste }}"><br />
+            <button class="add-dia"><sl-icon slot="prefix" name="pencil"></sl-icon> Modifier</button>
+        </form>
+
+
+        </div></center>
+
+    </div> 
+
+{% endblock %}

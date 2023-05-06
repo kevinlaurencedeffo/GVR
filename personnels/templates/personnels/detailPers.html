@@ -1,0 +1,73 @@
+{% extends 'comptes/dashboard.html' %}
+{% block content %}
+    <style>
+       
+        .profile-card{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:30px;
+            max-width: 420px;
+            background-color: #fff;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+
+        }
+        .images{
+            position: relative;
+            margin-bottom: 10px;
+            height: 220px;
+            width: 220px;
+            border-radius: 50%;
+            background: #4070f4;
+            padding: 3px;
+        }
+        .image .profile-img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+        }
+        .profile-card .text-data{
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        .text-data .name{
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .text-data .job{
+            font-size: 15px;
+            margin-top: 10px;
+            font-weight: 400;
+        }
+    </style>
+
+<center>
+<div class="profile-card">
+    <div class="images">
+        <span style="width:80vw; height:40vh; font-size:10em;">👷🏻‍♂️</span>
+    </div>
+    <div class="text-data">
+        <span class="name"><pre>{{product_object.name}} {{ product_object.surname }}</pre></span>
+        <span class="job">Matricule: {{ product_object.matricule }} </span>
+        <span class="job">CNI: {{ product_object.cni }}</span>
+        <span class="job">Sexe: {{ product_object.sexe }}</span>
+        <span class="job">Nationalite: {{ product_object.nationalite }}</span>
+        <span class="job">Date de Naissance: {{ product_object.date }}</span>
+        <span class="job">Fonction: {{ product_object.poste }}</span>
+        <span class="job">Adresse: {{ product_object.quartier }}</span>
+        <span class="job">Email: {{ product_object.email }}</span>
+        <span class="job">Tel: {{ product_object.tel }}</span>
+        <span class="job">Imprimer le Contrat</span>
+        
+    </div>
+    
+</div>
+</center>
+
+
+{% endblock %}
