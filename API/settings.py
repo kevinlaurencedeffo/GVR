@@ -13,7 +13,7 @@ TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-45+y$a1=pclrfvr0^svo5=obg0g0gecdq!t-497&1-oud1)%jw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 #Application  definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -122,7 +122,8 @@ USE_TZ = True
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static",'static/shoelacestyle/shoelace/dist/']
+STATICFILES_DIRS = [BASE_DIR]
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 AUTH_USER_MODEL = 'comptes.User'
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
