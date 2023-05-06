@@ -45,6 +45,7 @@ pyhanko-certvalidator==0.20.1
 pyparsing==3.0.9
 pypdf==3.4.1
 pycairo
+wheel
 PyYAML
 gunicorn
 xhtml2pdf
